@@ -1,0 +1,23 @@
+
+services:
+  web_app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/services
+      - /usr/src/services/node_modules
+    environment:
+      - DB_HOST=${SUPABASE_DB_HOST}
+      - DB_USER=${SUPABASE_DB_USER}
+      - DB_NAME=${SUPABASE_DB_NAME}
+      - DB_PORT=${SUPABASE_DB_PORT}
+      - DB_PASSWORD=${SUPABASE_DB_PASSWORD}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - DIRECT_URL=${DIRECT_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRE_IN=${JWT_EXPIRE_IN}
+      - FRONTEND_URL=http://localhost:5173
+    restart: on-failure
