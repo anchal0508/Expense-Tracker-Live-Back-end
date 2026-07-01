@@ -39,14 +39,18 @@ app.use((err, req, res, next) => {
         message: message,
         stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
     });
-})
+});
 
-db.sequelize.authenticate()
-    .then(() => {
-        const PORT = process.env.PORT || 3000;
-        app.listen(PORT, "0.0.0.0", () => console.log('......I"m Online.....!!!'));
-    })
-    .catch((err) => {
-        console.log(err.message);
-    })
-
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, "0.0.0.0", async () => {
+    console.log(`......I'm Online on port ${PORT}.....!!!`);
+    
+    // Database connection check karein
+    try {
+        await db.sequelize.authenticate();
+        console.log('Database connected successfully.');
+    } catch (err) {
+        console.error('DATABASE CONNECTION FAILED:', err.message);
+        console.error(err.stack);
+    }
+});
