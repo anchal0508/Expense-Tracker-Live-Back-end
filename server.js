@@ -27,6 +27,8 @@ app.use('/api/users/', userRouter);
 app.use('/api/expenses/', expenseRouter);
 
 
+await db.sequelize.authenticate();
+await db.sequelize.sync(); 
 
 
 
