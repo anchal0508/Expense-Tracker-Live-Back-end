@@ -8,7 +8,7 @@ const db = require('./models/index');
 
 
 app.use(cors({
-    origin: 'https://exp-anchal555.netlify.app/',
+    origin: 'https://exp-anchal555.netlify.app',
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS']
