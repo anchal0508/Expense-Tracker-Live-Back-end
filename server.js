@@ -43,16 +43,30 @@ app.use((err, req, res, next) => {
     });
 });
 
+
+
+
+db.sequelize
+
+
+
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, "0.0.0.0", async () => {
+
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`......I'm Online on port ${PORT}.....!!!`);
     
-    // Database connection check karein
-    try {
-        await db.sequelize.authenticate();
-        console.log('Database connected successfully.');
-    } catch (err) {
-        console.error('DATABASE CONNECTION FAILED:', err.message);
-        console.error(err.stack);
-    }
+    db.sequelize.authenticate()
+        .then(() => {
+            console.log('Database connected successfully.');
+            
+            return db.sequelize.sync({ alter: true }); 
+        })
+        .then(() => {
+            console.log('Database tables synced/created successfully.');
+        })
+        .catch((err) => {
+            console.error('DATABASE CONNECTION FAILED:', err.message);
+            console.error(err.stack);
+        });
 });
