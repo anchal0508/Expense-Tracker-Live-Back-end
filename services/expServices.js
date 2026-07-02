@@ -53,7 +53,7 @@ const getAllExpByUser = async (userId, filters) => {
         raw: true,
         offset: offset
     });
-    const totalPages = (groupedData.count / limit) || 1;
+    const totalPages = Math.ceil(groupedData.count / limit) || 1;
     // console.log("----------->>>------------",groupedData.count, limit);
 
 
