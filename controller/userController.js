@@ -52,7 +52,8 @@ const login = async (req, res, next) => {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-            maxAge: 24 * 60 * 60 * 1000
+            maxAge: 24 * 60 * 60 * 1000,
+            partitioned: true   
         });
 
         return res.status(200).json({
