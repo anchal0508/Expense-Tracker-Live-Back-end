@@ -1,0 +1,31 @@
+services:
+  web_app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/services
+      - /usr/src/services/node_modules
+    environment:
+      # Local variables ki jagah Supabase hosted parameters use honge
+      - DB_HOST=${SUPABASE_DB_HOST}
+      - DB_USER=${SUPABASE_DB_USER}
+      - DB_NAME=${SUPABASE_DB_NAME}
+      - DB_PASSWORD=${SUPABASE_DB_PASSWORD}
+      - DB_PORT=${SUPABASE_DB_PORT}   # Postgres ka default port MySQL se alag hota hai
+    restart: on-failure
+
+    web_app:
+      build: .
+      ports:
+        - "3000:3000"
+      volumes:
+        - .:/usr/src/services
+        - /usr/src/services/node_modules
+      environment:
+      
+        - DATABASE_URL=${DATABASE_URL}
+        - DIRECT_URL=${DIRECT_URL}
+        - SUPABASE_URL=${SUPABASE_URL}
+        - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      restart: on-failure
