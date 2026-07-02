@@ -8,6 +8,7 @@ const db = require('./models/index');
 
 
 app.use(cors({
+    // origin: 'http://localhost:5173',
     origin: 'https://exp-anchal555.netlify.app',
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],

@@ -5,20 +5,8 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
-
-// 1. Force 'production' fallback if NODE_ENV is completely empty
-const env = process.env.NODE_ENV || 'production';
-
-// 2. Load the full config object safely
-const configModule = require(path.join(__dirname, '/../config/config.js'));
-
-// 3. Fallback to production if the current env string isn't found in the file
-const config = configModule[env] || configModule['production'];
-
-if (!config) {
-  throw new Error(`Sequelize Error: Could not find database configuration for environment: "${env}"`);
-}
-
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 let sequelize;

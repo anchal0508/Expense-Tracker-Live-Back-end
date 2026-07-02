@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
             const error = new Error('Invalid or expired authentication token');
             error.statusCode = 401;
             error.cause = jwtError;
-            throw next(error);
+            return next(error);
 
         }
 
@@ -33,7 +33,7 @@ const auth = async (req, res, next) => {
         if (!dbUser) {
             const error = new Error('User account linked to this token does not exist');
             error.statusCode = 401;
-            throw next(error);
+            return next(error);
         }
         req.user = dbUser;
         next();
