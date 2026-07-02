@@ -16,14 +16,20 @@ module.exports = {
     dialect: "postgres",
   },
   production: {
-    // Render provides this variable automatically when you link a database
-    use_env_variable: 'DATABASE_URL', 
-    dialect: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
+  use_env_variable: 'DATABASE_URL', 
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
     }
+  },
+  // Yeh block connections ko sahi se handle karega aur auth fail nahi hone dega
+  pool: {
+    max: 5,        // Ek baar me maximum 5 connections open honge
+    min: 0,        // Jab kaam na ho toh zero ho jayenge
+    acquire: 30000, // Connection milne ka max time (30 seconds)
+    idle: 10000    // 10 seconds khali rehne par connection band ho jayega
   }
+}
 };
