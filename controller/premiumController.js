@@ -58,7 +58,7 @@ const generated_signature = crypto
 // ----------------------- replacing -----------------------
 
 
-
+const isValid = generated_signature === razorpay_signature;
 
         if (!isValid) {
             return res.status(400).json({ success: false, message: "Transaction signature mismatch. Fraud detected." });
