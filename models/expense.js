@@ -17,7 +17,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Expense.init({
-    
+     userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users', // 'Users' Table name (Plural)
+          key: 'id'       // Users Table id (primary Key)
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
     expenseOn: {
       type: DataTypes.STRING,
       allowNull: false

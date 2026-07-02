@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'expenses',         // By default it wll be Expenses if we will not write it
         onDelete: 'CASCADE'     // If we delete User then its Expenses will also be deleted
       });
+
+      User.hasMany(models.Order, {
+        foreignKey: 'userId',   // a column will be added in expense table
+        as: 'orders',         // By default it wll be Orders if we will not write it
+        onDelete: 'CASCADE'     // If we delete User then its Order will also be deleted
+      });
     }
   }
   User.init({
@@ -46,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       beforeUpdate: async (user) => {
         if (user.changed('password')) {
           const salt = parseInt(process.env.PASSWORD_SALT || 12);
-          user.password = await bcrypt.hash(User.password, salt);
+          user.password = await bcrypt.hash(user.password, salt);
         }
       }
     }

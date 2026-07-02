@@ -4,8 +4,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/usr/src/services
-      - /usr/src/services/node_modules
+      - .:/usr/src/server
+      - /usr/src/server/node_modules
     environment:
       # Local variables ki jagah Supabase hosted parameters use honge
       - DB_HOST=${SUPABASE_DB_HOST}
@@ -17,4 +17,8 @@ services:
       - DIRECT_URL=${DIRECT_URL}
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
+      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+    env_file:
+      - .env
     restart: on-failure

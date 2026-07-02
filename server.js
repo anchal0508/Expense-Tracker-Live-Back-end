@@ -14,7 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(cors({
-    origin: 'https://exp-anchal555.netlify.app', // 
+    origin: 'http://localhost:5173', // 
+    // origin: 'https://exp-anchal555.netlify.app', // 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -24,10 +25,12 @@ app.use(cors({
 
 const userRouter = require('./router/userRouter');
 const expenseRouter = require('./router/expenseRouter');
+const premiumRouter = require('./router/premiumRouter');
 
 
 app.use('/api/users/', userRouter);
 app.use('/api/expenses/', expenseRouter);
+app.use('/api/premium/', premiumRouter);
 
 
 // Global Error handling
