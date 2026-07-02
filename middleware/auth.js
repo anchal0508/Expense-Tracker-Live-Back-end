@@ -30,7 +30,8 @@ const auth = async (req, res, next) => {
 
         }
 
-        const dbUser = await User.findByPk(verifyUser.id, {
+        const userId = verifyUser.id || verifyUser.userId; 
+        const dbUser = await User.findByPk(verifyUser.userId, {
             attributes: { exclude: ['password'] }
         });
 
