@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(cors({
-    origin: 'https://anchalkoshta5.netlify.app', // 
+    origin: 'https://exp-anchal555.netlify.app', // 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -60,5 +60,5 @@ db.sequelize.authenticate()
     })
     .catch((err) => {
         // err.message की जगह पूरा err प्रिंट करें ताकि असली वजह दिखे
-        console.error('CRITICAL: DB Connection failed...', err); 
+        console.error('CRITICAL: DB Connection failed...', err.stack); 
     });

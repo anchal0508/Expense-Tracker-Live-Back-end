@@ -10,7 +10,7 @@ COPY package*.json ./
 
 # Running and installing all the dependencies mentioned in the package
 # this command in faster then the npm install
-RUN ci --only=production
+RUN npm ci --only=production
 
 # Copying all the folders and files of the NodeJS (project files)
 COPY . .
