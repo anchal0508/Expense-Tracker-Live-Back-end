@@ -74,6 +74,7 @@ const isValid = generated_signature === razorpay_signature;
             status: 'SUCCESSFUL'
         });
 
+        
         return res.status(200).json({
             success: true,
             message: "Transaction Verified and Activated Successfully"

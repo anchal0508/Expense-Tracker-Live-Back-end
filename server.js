@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(cors({
-    // origin: 'http://localhost:5173', // 
-    origin: 'https://exp-anchal555.netlify.app', // 
+    origin: 'http://localhost:5173', // 
+    // origin: 'https://exp-anchal555.netlify.app', // 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
