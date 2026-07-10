@@ -1,5 +1,4 @@
 const RazorPay = require('razorpay');
-// const { validatePaymentVerification } = require('razorpay/dist/utils/razorpay-utils');
 const { Order } = require('../models/index');
 const crypto = require('crypto');
 
@@ -84,7 +83,69 @@ const isValid = generated_signature === razorpay_signature;
     }
 };
 
+
+    
+    const getTransactionHistory = async (req, res, next) => {
+    try {
+        const limit = parseInt(req.query.limit, 10);
+        const parsedLimit = isNaN(limit) || limit <= 0 ? 5 : limit;
+        
+        const { lastId, lastCreatedAt } = req.query;
+
+        const searchQuery = {
+            userId: req.user.id
+        };
+
+        if (lastId && lastCreatedAt) {
+            searchQuery[Op.or] = [
+                {
+                    createdAt: {
+                        [Op.lt]: new Date(lastCreatedAt) 
+                    }
+                },
+                {
+                    createdAt: new Date(lastCreatedAt),
+                    id: {
+                        [Op.lt]: lastId 
+                    }
+                }
+            ];
+        }
+
+        const rows = await Order.findAll({
+            where: searchQuery,
+            limit: parsedLimit + 1, 
+            order: [
+                ['createdAt', 'DESC'],
+                ['id', 'DESC']
+            ],
+            attributes: ['id', 'orderid', 'paymentid', 'status', 'createdAt']
+        });
+
+        const hasNextPage = rows.length > parsedLimit;
+        if (hasNextPage) {
+            rows.pop(); 
+        }
+
+        const nextCursor = hasNextPage ? {
+            lastId: rows[rows.length - 1].id,
+            lastCreatedAt: rows[rows.length - 1].createdAt
+        } : null;
+
+        return res.status(200).json({
+            success: true,
+            orders: rows,
+            pagination: {
+                hasNextPage: hasNextPage,
+                nextCursor: nextCursor 
+            }
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 module.exports = {
     gold,
-    update
+    update,
+    getTransactionHistory
 }

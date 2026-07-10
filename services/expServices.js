@@ -64,11 +64,34 @@ const addExpInDb = async (expData) => {
 
 
 const getAllExpByUser = async (userId, filters) => {
-    const { page = 1, limit = 5, groupData = 'all' } = filters;
+    const { page = 1, limit = 5, groupData = 'all' , search='', cursor} = filters;
     const offset = (page - 1) * limit;
+    
     const whereClause = { userId: userId };
 
+    if (search && search.trim() !== '') {
+        whereClause[Op.or] = [
+            {
+                expenseOn: {
+                    [Op.iLike]: `%${search}%` 
+                }
+            },
+            {
+                description: {
+                    [Op.iLike]: `%${search}%` 
+                }
+            }
+        ];
+    }
+
     if (!groupData || groupData === 'all') {
+        
+        if (cursor && cursor !== 'null' && cursor !== 'undefined') {
+            whereClause.id = {
+                [Op.gt]: parseInt(cursor, 10) 
+            };
+        }
+
         const groupedData = await Expense.findAndCountAll({
             where: whereClause,
             order: [
@@ -79,7 +102,7 @@ const getAllExpByUser = async (userId, filters) => {
             offset: offset,
             raw: true
         });
-
+        
         const totalPages = Math.ceil(groupedData.count / limit) || 1;
 
         return {
@@ -122,7 +145,8 @@ const getAllExpByUser = async (userId, filters) => {
         offset: offset,
         raw: true
     });
-console.log("Grouped Rows -----<<<<<---------",groupedRows);
+
+    
     return {
         expenses: groupedRows,
         hasNext: page < totalPages,

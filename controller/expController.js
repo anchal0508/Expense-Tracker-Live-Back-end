@@ -111,8 +111,7 @@ const addExp = async (req, res, next) => {
 
 const allExp = async (req, res, next) => {
     try {
-        const { page, limit, cursor, groupData } = req.query;
-        console.log("----------->>>>>>>---------", req.body, page, limit, cursor, groupData);
+        const { page=1, limit=5, search= '', cursor, groupData } = req.query;
 
         const pageNum = parseInt(page, 10) || 1;
         const limitNum = parseInt(limit, 10) || 5;
@@ -123,7 +122,8 @@ const allExp = async (req, res, next) => {
             page: pageNum,
             limit: limitNum,
             cursor: cursorNum,
-            groupData: groupData
+            groupData: groupData,
+            search: search
         });
 
         return res.status(200).json({
