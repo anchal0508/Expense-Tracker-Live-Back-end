@@ -71,7 +71,7 @@ const login = async (req, res, next) => {
 const profile = async (req, res, next) => {
     try {
         if (req.user) {
-            let isPaidMember = "No";
+            let isPaidMember = false;
 
             try {
                 const successfulOrder = await Order.findOne({
@@ -82,13 +82,13 @@ const profile = async (req, res, next) => {
                 });
                 if (successfulOrder) {
 
-                    isPaidMember = "Yes";
+                    isPaidMember = true;
                 } else {
-                    isPaidMember: "No";
+                    isPaidMember: false;
                 }
             } catch (dbErr) {
                 console.error("Orders table lookup bypassed or missing----:", dbErr.message);
-                isPaidMember = "No";
+                isPaidMember = false;
             }
 
             return res.status(200).json({
