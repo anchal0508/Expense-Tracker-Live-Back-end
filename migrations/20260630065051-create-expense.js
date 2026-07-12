@@ -1,3 +1,6 @@
+// 5
+// Shree
+
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

@@ -1,3 +1,6 @@
+// 5
+// Shree
+
 'use strict';
 const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
@@ -19,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Order, {
         foreignKey: 'userId',   // a column will be added in expense table
         as: 'orders',         // By default it wll be Orders if we will not write it
+        onDelete: 'CASCADE'     // If we delete User then its Order will also be deleted
+      });
+
+      User.hasMany(models.forgotPass, {
+        foreignKey: 'userId',   // a column will be added in expense table
+        as: 'forgotPass',         // By default it wll be Orders if we will not write it
         onDelete: 'CASCADE'     // If we delete User then its Order will also be deleted
       });
     }

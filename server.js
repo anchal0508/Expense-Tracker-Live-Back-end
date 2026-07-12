@@ -1,3 +1,6 @@
+// 5
+// Shree
+
 require('dotenv').config();
 
 const cookieParser = require('cookie-parser');
@@ -26,11 +29,13 @@ app.use(cors({
 const userRouter = require('./router/userRouter');
 const expenseRouter = require('./router/expenseRouter');
 const premiumRouter = require('./router/premiumRouter');
+const forgotRouter = require('./router/forgotRouter');
 
 
 app.use('/api/users/', userRouter);
 app.use('/api/expenses/', expenseRouter);
 app.use('/api/premium/', premiumRouter);
+app.use('/api/password/', forgotRouter);
 
 
 // Global Error handling
@@ -39,6 +44,14 @@ app.use((err, req, res, next) => {
     const message = err.message || "Internal server Error";
 
     console.log("Global Error Logged: ", err.stack)
+     if (err.original) {
+        console.error("================ DATABASE CRITICAL ERROR ================");
+        console.error("MESSAGE:", err.original.message); 
+        console.error("DETAIL :", err.original.detail);  
+        console.error("=========================================================");
+    } else {
+        console.log("Global Error Logged: ", err.stack);
+    }
 
     res.status(statusCode).json({
         success: false,
